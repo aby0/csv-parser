@@ -3,6 +3,7 @@ from lib import cluster_data
 from lib import findcluster_kmeans
 from lib import model_data
 from lib.util import realpath
+import numpy as np
 
 PRICING_JSON = realpath('../dataset/pricing.2016-09-01.json')
 PRICING_CSV = realpath('../dataset/pricing.2016-09-01.csv')
@@ -16,4 +17,8 @@ cluster_centroid = cluster_data.cluster(DEL_CCU_CSV, cluster_num)
 # Check cluster_centroid
 
 if __name__ == '__main__':
-    print(cluster_centroid)
+    np.set_printoptions(precision=3, suppress=True)
+    cluster_centroid = np.asarray(cluster_centroid)
+    print(cluster_centroid[:, 0])
+    print(cluster_num)
+
