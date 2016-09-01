@@ -1,7 +1,7 @@
 import csv
 import matplotlib
 import pandas as pd
-import sklearn
+import numpy as np
 data = pd.read_csv('data.csv')
 
 # print data.head(2)
@@ -10,6 +10,7 @@ data["_source_doj"] = pd.to_datetime(data["_source_doj"])
 data["_source_timestamp"] = pd.to_datetime(data["_source_timestamp"])
 
 data["_index"] = data["_source_doj"] - data["_source_timestamp"]
+data["_index"] = data["_index"].astype('timedelta64[D]')
 data.rename(columns={'_index': 'time_diff'}, inplace=True)
 
 #Form a csv for specific source and destination
@@ -36,13 +37,13 @@ def formCsv(src, des, data, file):
             csv_w.writerow(i.values())
 
 
-# src = "CCU"
-# des = "BOM"
-#
-# name = src+'_' + des + '.csv'
+src = "BLR"
+des = "VTZ"
 
-#
-# formCsv(src, des, data, name)
+name = src+'_' + des + '.csv'
+
+
+formCsv(src, des, data, name)
 
 
 # Find all unique flight_id and time_diff and plot it
