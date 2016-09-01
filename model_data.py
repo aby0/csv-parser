@@ -1,7 +1,5 @@
 import csv
-import matplotlib
 import pandas as pd
-import numpy as np
 data = pd.read_csv('data.csv')
 
 # print data.head(2)
@@ -15,17 +13,17 @@ data.rename(columns={'_index': 'time_diff'}, inplace=True)
 
 #Form a csv for specific source and destination
 
-def formCsv(src, des, data, file):
+def formCsv(src, des,fare_class, data, file):
     temp_data = []
     columns = ['source_fare', 'time_diff']
 
+    data = data[((data._source_source == src) & (data._source_destination == des) & (data._source_fare_class == fare_class))]
 
     for index, rows in data.iterrows():
         temp = {}
         # print rows
         # break
-        temp1 = rows.loc([((rows._source_source == src) & (rows._source_destination == des))])
-        # print temp1
+        temp1 = rows.loc()
         temp[0] = (temp1["_source_fare"])
         temp[1] = (temp1["time_diff"])
         temp_data.append(temp)
@@ -37,13 +35,14 @@ def formCsv(src, des, data, file):
             csv_w.writerow(i.values())
 
 
-src = "BLR"
-des = "VTZ"
+src = "DEL"
+des = "BLR"
+fare_class = "E"
 
 name = src+'_' + des + '.csv'
 
 
-formCsv(src, des, data, name)
+formCsv(src, des,fare_class, data, name)
 
 
 # Find all unique flight_id and time_diff and plot it

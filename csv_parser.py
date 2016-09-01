@@ -17,7 +17,7 @@ def flattenjson( b, delim ):
     return val
 
 
-f = open('pricing.2016-08-30.json')
+f = open('pricing.2016-09-01.json')
 flat = []
 for line in f:
     # print line
