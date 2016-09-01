@@ -2,13 +2,18 @@ from lib import csv_parser
 from lib import cluster_data
 from lib import findcluster_kmeans
 from lib import model_data
+from lib.util import realpath
 
-csv_parser.parsejson('pricing.2016-09-01.json', 'pricing.2016-09-01.csv')
-data = model_data.filtercsv('pricing.2016-09-01.csv')
-model_data.formcsv('CCU', 'BLR', data, 'E', 'CCU_BLR.csv')
+PRICING_JSON = realpath('../dataset/pricing.2016-09-01.json')
+PRICING_CSV = realpath('../dataset/pricing.2016-09-01.csv')
+DEL_CCU_CSV = realpath('../dataset/DEL_CCU.csv')
+csv_parser.parsejson(PRICING_JSON, PRICING_CSV)
+data = model_data.filtercsv(PRICING_CSV)
+model_data.formcsv('DEL', 'CCU', data, 'E', DEL_CCU_CSV)
 
-cluster_num = findcluster_kmeans.calculatecluster('CCU_BLR.csv')
-cluster_centroid = cluster_data.cluster('CCU_BLR.csv', cluster_num)
+cluster_num = findcluster_kmeans.calculatecluster(DEL_CCU_CSV)
+cluster_centroid = cluster_data.cluster(DEL_CCU_CSV, cluster_num)
 # Check cluster_centroid
 
-print cluster_centroid
+if __name__ == '__main__':
+    print(cluster_centroid)
