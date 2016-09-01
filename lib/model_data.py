@@ -13,10 +13,11 @@ def filtercsv(file_name):
 
     data = pd.read_csv(file_name)
 
-    data["_source_doj"] = pd.to_datetime(data["_source_doj"]).astype(np.int64)
-    data["_source_timestamp"] = pd.to_datetime(data["_source_timestamp"]).astype(np.int64)
+    data["_source_doj"] = pd.to_datetime(data["_source_doj"])
+    data["_source_timestamp"] = pd.to_datetime(data["_source_timestamp"])
 
     data["_index"] = (data["_source_doj"] - data["_source_timestamp"])
+    data["_index"] = data["_index"].astype('timedelta64[D]')
     data.rename(columns={'_index': 'time_diff'}, inplace=True)
 
     return data
