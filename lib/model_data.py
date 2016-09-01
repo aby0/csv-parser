@@ -25,13 +25,15 @@ def filtercsv(file_name):
 # ===============================================
 
 
-def formcsv(src, des, data, file):
+def formcsv(src, des, data, fare_class, file):
     temp_data = []
     columns = ['source_fare', 'time_diff']
+    data = data[((data._source_source == src) & (data._source_destination == des) &
+                 (data._source_fare_class == fare_class))]
 
     for index, rows in data.iterrows():
         temp = {}
-        temp1 = rows.loc([((rows._source_source == src) & (rows._source_destination == des))])
+        temp1 = rows.loc()
         temp[0] = (temp1["_source_fare"])
         temp[1] = (temp1["time_diff"])
         temp_data.append(temp)
@@ -43,11 +45,5 @@ def formcsv(src, des, data, file):
         for i in temp_data:
             csv_w.writerow(i.values())
 
-data = filtercsv('file.csv')
-formcsv('CCU', 'DEL', data, 'temp.csv')
 
-temp_1 = pd.read_csv('temp.csv')
-
-print data.shape
-print temp_1.shape
 
