@@ -42,5 +42,5 @@ def parsejson(file_json, file_csv):
             csv_w.writerow(i.values())
 
 
-# parsejson('dataset-json/pricing.2016-08-30.json', 'file.csv')
+#parsejson('./../dataset/airports.json', './../dataset/airports.csv')
 
